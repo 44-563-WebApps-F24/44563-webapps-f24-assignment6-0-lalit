@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+ <head>
+    <title>Exploring Basic JavaScript</title>
+    
+ </head>
+<body>
+<h1>Guess the color Lalit kumar</h1>
+<h2>Getting input</h2>
+<form>
+    <label for="secretColor">Guess the color:</label>
+    <input type="password" id="secretColor" value="Red"><br><br>
+
+    <label for="colorGuess">Enter a guess:</label>
+    <input type="text" id="colorGuess"><br><br>
+
+    <button type="button" onclick="processColor()">Check the color</button>
+</form>
+
+<p id="result"></p>
+<div id="imageContainer">
+    <img id="plantImage" src="plant1.jpg" alt="Plant Image" style="width:200px; height:200px;" onclick="nextImage()">
+</div>
+
+
+<script>
+
+    let attempts = 0;
+    let wrong = 0;
+
+    
+    function processColor() {
+        let secretColor = document.getElementById("secretColor").value;
+        let guessedColor = document.getElementById("colorGuess").value;
+
+        attempts++;
+
+        if (secretColor.toLowerCase() !== guessedColor.toLowerCase()) {
+            wrong++;
+            alert("That was not it");
+        } else {
+            alert("You got it!");
+        }
+
+        document.getElementById("result").innerHTML = `Attempts: ${attempts} | Wrong: ${wrong}`;
+    }
+    
+let showing = 1;
+
+function nextImage() {
+    let image = document.getElementById("plantImage");
+    switch (showing) {
+        case 1:
+            image.src = "plant1.jpg";
+            showing++;
+            break;
+        case 2:
+            image.src = "plant2.jpeg";
+            showing++;
+            break;
+        case 3:
+            image.src = "plant3.jpg";
+            showing = 1; // Reset to the first image
+            break;
+    }
+}
+
+</script>
+
+</body>
+</html>
