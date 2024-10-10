@@ -1,67 +1,95 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Page For Lunch</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lunch Order</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
+<body class="container mt-5">
 
-<h2>Lalit Kumar orders a lunch</h2>
+    <h2 class="text-center mb-4">Lalit Kumar Orders a Lunch</h2>
 
-<form>
-    <div>
-        <label for="drinkCheckbox">Drink</label>
-        <input type="checkbox" id="drinkCheckbox" value="drink">
+    <!-- Lunch Order Form -->
+    <form class="row g-3">
+        <div class="col-12">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="drinkCheckbox" value="drink">
+                <label class="form-check-label" for="drinkCheckbox">Drink</label>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="sideCheckbox" value="side">
+                <label class="form-check-label" for="sideCheckbox">Side</label>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="eatInCheckbox" value="in">
+                <label class="form-check-label" for="eatInCheckbox">Eat in</label>
+            </div>
+        </div>
+        <div class="col-12">
+            <button type="button" class="btn btn-primary" onclick="startLunch()">Start a lunch order</button>
+        </div>
+    </form>
+
+    <!-- Lunch Order Result -->
+    <div id="result" class="alert alert-info mt-4" role="alert">
+        Your lunch order will appear here.
     </div>
-    <div>
-        <label for="sideCheckbox">Side</label>
-        <input type="checkbox" id="sideCheckbox" value="side">
+
+    <hr>
+
+    <!-- Update Lunch Object -->
+    <h3 class="text-center">Update Lunch Object</h3>
+
+    <form class="row g-3">
+        <div class="col-md-6">
+            <label for="propertyInput" class="form-label">Enter property:</label>
+            <input type="text" class="form-control" id="propertyInput" value="entree">
+        </div>
+        <div class="col-md-6">
+            <label for="valueInput" class="form-label">Set it to:</label>
+            <input type="text" class="form-control" id="valueInput">
+        </div>
+        <div class="col-12">
+            <button type="button" class="btn btn-success" onclick="updateLunch()">Update the lunch</button>
+        </div>
+    </form>
+
+    <!-- Updated Lunch Order Result -->
+    <div id="updatedResult" class="alert alert-warning mt-4" role="alert">
+        Updated lunch order will appear here.
     </div>
-    <div>
-        <label for="eatInCheckbox">Eat in</label>
-        <input type="checkbox" id="eatInCheckbox" value="in">
-    </div>
 
-    <input type="button" value="Start a lunch order" onclick="startLunch()">
-</form>
+    <!-- JavaScript to handle the lunch order -->
+    <script>
+        let my_lunch = {};
 
-<p id="result">This text will be replaced with your lunch order</p>
+        function startLunch() {
+            my_lunch = {
+                drink: document.getElementById("drinkCheckbox").checked,
+                side: document.getElementById("sideCheckbox").checked,
+                in: document.getElementById("eatInCheckbox").checked
+            };
 
-<h3>Update Lunch Object</h3>
-<form>
-    <div>
-        <label for="propertyInput">Enter property:</label>
-        <input type="text" id="propertyInput" value="entree">
-    </div>
-    <div>
-        <label for="valueInput">Set it to:</label>
-        <input type="text" id="valueInput"> 
-    </div>
+            document.getElementById("result").innerHTML = `<strong>Your lunch order:</strong> ${JSON.stringify(my_lunch)}`;
+        }
 
-    <input type="button" value="Update the lunch" onclick="updateLunch()">
-</form>
+        function updateLunch() {
+            let property = document.getElementById("propertyInput").value;
+            let value = document.getElementById("valueInput").value;
 
-<script>
-    let my_lunch = {};
+            my_lunch[property] = value;
 
-    function startLunch() {
-        my_lunch = {};
+            document.getElementById("updatedResult").innerHTML = `<strong>Updated lunch:</strong> ${JSON.stringify(my_lunch)}`;
+        }
+    </script>
 
-        my_lunch.drink = document.getElementById("drinkCheckbox").checked;
-        my_lunch.side = document.getElementById("sideCheckbox").checked;
-        my_lunch.in = document.getElementById("eatInCheckbox").checked;
-
-        document.getElementById("result").innerHTML = JSON.stringify(my_lunch);
-    }
-
-    function updateLunch() {
-        let property = document.getElementById("propertyInput").value;
-        let value = document.getElementById("valueInput").value;
-
-        my_lunch[property] = value;
-
-        document.getElementById("result").innerHTML = JSON.stringify(my_lunch);
-    }
-</script>
-
+    <!-- Bootstrap JS (Optional) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
