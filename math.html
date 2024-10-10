@@ -1,85 +1,97 @@
-
 <!DOCTYPE html>
 <html>
 <head>
     <title>Math Function Page</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
-<h1>Lalit Kumar Figures Out</h1>
-<h2>Getting input</h2>
+<body class="container mt-5">
+    <h1 class="text-primary text-center">Lalit Kumar Figures Out</h1>
+    <h2 class="mt-4">Getting Input</h2>
 
-<form>
-    <label for="firstNumber">Enter a number:</label>
-    <input type="number" id="firstNumber" value="2"><br><br>
+    <form class="mb-4">
+        <div class="mb-3">
+            <label for="firstNumber" class="form-label">Enter a number:</label>
+            <input type="number" class="form-control" id="firstNumber" value="2">
+        </div>
+        <div class="mb-3">
+            <label for="secondNumber" class="form-label">Enter a number:</label>
+            <input type="number" class="form-control" id="secondNumber" value="12">
+        </div>
 
-    <label for="secondNumber">Enter a number:</label>
-    <input type="number" id="secondNumber" value="12"><br><br>
+        <button type="button" class="btn btn-success" onclick="powerSum()">Compute Sum of Powers</button>
+    </form>
 
-    <input type="button" onclick="powerSum()" value="Compute Sum of Powers">
-</form>
+    <p id="powerResult" class="alert alert-info">The result will be displayed here.</p>
 
-<p id="powerResult">The result will be displayed here.</p>
+    <hr>
 
-<hr>
+    <h2 class="mt-4">Radio Button Group for Calculations</h2>
 
-<h2>Radio Button Group for Calculations</h2>
+    <form class="mb-4">
+        <div class="form-check">
+            <input type="radio" id="max" name="operation" value="max" class="form-check-input" onclick="processRadio()">
+            <label for="max" class="form-check-label">Max</label>
+        </div>
+        <div class="form-check">
+            <input type="radio" id="min" name="operation" value="min" class="form-check-input" onclick="processRadio()">
+            <label for="min" class="form-check-label">Min</label>
+        </div>
+        <div class="form-check">
+            <input type="radio" id="avg" name="operation" value="avg" class="form-check-input" onclick="processRadio()">
+            <label for="avg" class="form-check-label">Average</label>
+        </div>
+        <div class="form-check">
+            <input type="radio" id="geo" name="operation" value="geo" class="form-check-input" onclick="processRadio()">
+            <label for="geo" class="form-check-label">Geometric Mean</label>
+        </div>
+    </form>
 
-<form>
-    <input type="radio" id="max" name="operation" value="max" onclick="processRadio()">
-    <label for="max">Max</label><br>
+    <p id="calcResult" class="alert alert-info">The result of the calculation will be displayed here.</p>
 
-    <input type="radio" id="min" name="operation" value="min" onclick="processRadio()">
-    <label for="min">Min</label><br>
+    <!-- Bootstrap JS (Optional) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-    <input type="radio" id="avg" name="operation" value="avg" onclick="processRadio()">
-    <label for="avg">Average</label><br>
+    <script>
+        function powerSum() {
+            let first = parseInt(document.getElementById("firstNumber").value);
+            let second = parseInt(document.getElementById("secondNumber").value);
+            let sum = 0;
 
-    <input type="radio" id="geo" name="operation" value="geo" onclick="processRadio()">
-    <label for="geo">Geometric Mean</label><br>
-</form>
+            for (let i = 0; i < first; i++) {
+                sum += Math.pow(second, i);
+            }
 
-<p id="calcResult">The result of the calculation will be displayed here.</p>
+            document.getElementById("powerResult").innerHTML = 
+                `Sum of the first ${first} powers with base ${second} is ${sum}`;
+        }
 
-<script>
-function powerSum() {
-    let first = parseInt(document.getElementById("firstNumber").value);
-    let second = parseInt(document.getElementById("secondNumber").value);
-    let sum = 0;
+        function processRadio() {
+            let first = parseFloat(document.getElementById("firstNumber").value);
+            let second = parseFloat(document.getElementById("secondNumber").value);
 
-    for (let i = 0; i < first; i++) {
-        sum += Math.pow(second, i);
-    }
+            let operation = document.querySelector('input[name="operation"]:checked').value;
+            let result = 0;
+            let operationName = '';
 
-    document.getElementById("powerResult").innerHTML = 
-        `Sum of the first ${first} powers with base ${second} is ${sum}`;
-}
+            if (operation === 'max') {
+                result = Math.max(first, second);
+                operationName = 'Maximum';
+            } else if (operation === 'min') {
+                result = Math.min(first, second);
+                operationName = 'Minimum';
+            } else if (operation === 'avg') {
+                result = (first + second) / 2;
+                operationName = 'Average';
+            } else if (operation === 'geo') {
+                result = (first * second) ** 0.5;
+                operationName = 'Geometric Mean';
+            }
 
-function processRadio() {
-    let first = parseFloat(document.getElementById("firstNumber").value);
-    let second = parseFloat(document.getElementById("secondNumber").value);
-
-    let operation = document.querySelector('input[name="operation"]:checked').value;
-    let result = 0;
-    let operationName = '';
-
-    if (operation === 'max') {
-        result = Math.max(first, second);
-        operationName = 'Maximum';
-    } else if (operation === 'min') {
-        result = Math.min(first, second);
-        operationName = 'Minimum';
-    } else if (operation === 'avg') {
-        result = (first + second) / 2;
-        operationName = 'Average';
-    } else if (operation === 'geo') {
-        result = (first * second) ** 0.5;
-        operationName = 'Geometric Mean';
-    }
-
-    document.getElementById("calcResult").innerHTML = 
-        `Computed ${operationName} with values ${first} and ${second}, result is ${result}`;
-}
-</script>
+            document.getElementById("calcResult").innerHTML = 
+                `Computed ${operationName} with values ${first} and ${second}, result is ${result}`;
+        }
+    </script>
 
 </body>
 </html>
